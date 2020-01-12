@@ -1,23 +1,37 @@
 package com.github.fredriksa.StationService.models;
 
-public class Station {
-    private int id;
-    private String name;
-    private double lat;
-    private double lng;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-    public Station(int id, String name, double lat, double lng) {
+@Entity
+public class Station {
+    @Id
+    private long id;
+
+    @Column
+    private String name;
+
+    @Column
+    private int x;
+
+    @Column
+    private int y;
+
+    public Station() { }
+
+    public Station(long id, String name, int x, int y) {
         this.id = id;
         this.name = name;
-        this.lat = lat;
-        this.lng = lng;
+        this.x = x;
+        this.y = y;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -29,19 +43,19 @@ public class Station {
         this.name = name;
     }
 
-    public double getLat() {
-        return lat;
+    public int getX() {
+        return x;
     }
 
-    public void setLat(double lat) {
-        this.lat = lat;
+    public void setX(int x) {
+        this.x = x;
     }
 
-    public double getLng() {
-        return lng;
+    public double getY() {
+        return y;
     }
 
-    public void setLng(double lng) {
-        this.lng = lng;
+    public void setY(int y) {
+        this.y = y;
     }
 }

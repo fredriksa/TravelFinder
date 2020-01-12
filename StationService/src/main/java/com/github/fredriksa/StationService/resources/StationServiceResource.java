@@ -1,41 +1,41 @@
 package com.github.fredriksa.StationService.resources;
 
 import com.github.fredriksa.StationService.models.Station;
+import com.github.fredriksa.StationService.repositories.StationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @RestController
 @RequestMapping("/station")
 public class StationServiceResource {
 
+    @Autowired
+    private final StationRepository stationRepository = null;
+
     @RequestMapping("/{stationId}")
     public Station getStation(@PathVariable("stationId") String id) {
-        Random random = new Random();
-        return new Station(
-                Integer.parseInt(id),
-                "Station " + id,
-                random.nextDouble() * 50,
-                random.nextDouble() * 50
-        );
+        if (id.isEmpty()) return null;
+
+        return stationRepository.findById(Long.parseLong(id));
     }
 
     @RequestMapping("/all")
     public List<Station> getStations() {
-        return Arrays.asList(
-            new Station(1, "Station A", 50, 50),
-            new Station(2, "Station B", 50, 50),
-            new Station(3, "Station C", 50, 50),
-            new Station(4, "Station D", 50, 50)
-        );
+        List<Station> stations = new ArrayList<>();
+        stationRepository.findAll().forEach((station) -> stations.add(station));
+        return stations;
     }
 
     @RequestMapping("/exists/{stationName}")
     public boolean getExists(@PathVariable("stationName") String stationName) {
-        return true;
+        if (stationName.isEmpty()) return false;
+
+        Station station = stationRepository.findByName(stationName);
+        return station != null;
     }
 }
