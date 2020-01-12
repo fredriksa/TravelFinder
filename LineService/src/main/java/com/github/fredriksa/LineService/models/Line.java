@@ -1,6 +1,10 @@
 package com.github.fredriksa.LineService.models;
 
+import com.github.fredriksa.LineService.LineServiceApplication;
 import com.github.fredriksa.LineService.core.TravelType;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.*;
 
@@ -22,6 +26,10 @@ public class Line {
     @Column(name="ENDSTATION_ID")
     private int endStationId;
 
+    @Transient
+    @Autowired
+    private RestTemplate restTemplate;
+
     public Line() { }
 
     public Line(int id, TravelType type, int startStationId, int endStationId) {
@@ -29,18 +37,6 @@ public class Line {
         this.type = type;
         this.startStationId = startStationId;
         this.endStationId = endStationId;
-        name = buildName();
-    }
-
-    private String buildName() {
-        StringBuilder builder = new StringBuilder();
-        String typeName = type.toString().substring(0,1).toUpperCase() + type.toString().substring(1).toLowerCase();
-        builder.append(typeName)
-                .append(" ")
-                .append(id)
-                .append(" towards ")
-                .append(" endStationIdName");
-        return builder.toString();
     }
 
     public TravelType getType() {
