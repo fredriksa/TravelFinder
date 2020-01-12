@@ -18,9 +18,10 @@ public class LineServiceResource {
         String lineName = random.nextInt(900) + " towards Stockholm";
 
         return new Line(
-            Integer.parseInt(lineId),
+            40,
             TravelType.BUSS,
-            lineName
+            1,
+            1
         );
     }
 }
